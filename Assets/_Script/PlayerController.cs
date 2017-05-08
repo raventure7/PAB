@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class PlayerController : MonoBehaviour {
 
@@ -24,6 +25,7 @@ public class PlayerController : MonoBehaviour {
     public LayerMask groundLayers; // 게임오브젝트가 지면에 있는지 알 수 있는 레이어 리스트
     private float groundCheckRadius = 0.2f;
     private Animator anim;
+    float move;
 
     bool isDead = false;
     
@@ -49,7 +51,12 @@ public class PlayerController : MonoBehaviour {
         if(!isDead)
         { 
             isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayers);
-            float move = Input.GetAxis("Horizontal");
+#if    UNITY_EDITOR
+            move = Input.GetAxis("Horizontal");
+#endif 
+#if    UNITY_ANDROID
+            move = CrossPlatformInputManager.GetAxis("Horizontal");
+#endif
 
             this.GetComponent<Rigidbody2D>().velocity = new Vector2(move * maxSpeed, this.GetComponent<Rigidbody2D>().velocity.y);
 
@@ -63,16 +70,32 @@ public class PlayerController : MonoBehaviour {
 
     private void Update()
     {
-        if(Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump"))
         {
-            if(isGrounded == true && !isDead)
+            if (isGrounded == true && !isDead)
             {
                 this.GetComponent<Rigidbody2D>().velocity = new Vector2(this.GetComponent<Rigidbody2D>().velocity.x, 0);
                 this.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpForce));
-                
+
                 anim.SetTrigger("Jump");
                 //
             }
+
+        }
+        if (CrossPlatformInputManager.GetButton("Jump"))
+        {
+            if (isGrounded == true && !isDead)
+            {
+                this.GetComponent<Rigidbody2D>().velocity = new Vector2(this.GetComponent<Rigidbody2D>().velocity.x, 0);
+                this.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpForce));
+
+                anim.SetTrigger("Jump");
+                
+            }
+        }
+        if (CrossPlatformInputManager.GetButtonUp("Jump"))
+        {
+
         }
 
     }

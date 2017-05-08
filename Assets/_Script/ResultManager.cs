@@ -16,6 +16,7 @@ public class ResultManager : MonoBehaviour {
     //랭킹 정보 가져오기
     public void ResultTodayRankMap()
     {
+        
         rankMap = new Dictionary<int, Rank>();
         //Debug.Log(ConnectManager.getInst()._result);
         string[] lines = ConnectManager.getInst()._result.Split(new string[] { "\n" }, System.StringSplitOptions.RemoveEmptyEntries);
@@ -39,7 +40,7 @@ public class ResultManager : MonoBehaviour {
             rankBox.transform.FindChild("rank").GetComponent<Text>().text = ranking.ToString();
             rankBox.transform.FindChild("nickname").GetComponent<Text>().text = rank.nickname;
             rankBox.transform.FindChild("score").GetComponent<Text>().text = (rank.score).ToString();
-
+            Debug.Log("생성");
             rankBox.transform.SetParent(GameObject.Find("Canvas/Tab_TotalRank/Scroll View/Viewport/Content").transform);
         }
 
