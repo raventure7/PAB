@@ -7,19 +7,7 @@ public class ResultManager : MonoBehaviour {
 
     public static ResultManager Instance;
     public Dictionary<int, Rank> rankMap;
-    /*
-    public class Rank
-    {
-        public string nickname;
-        public float score;
 
-        public Rank(string nickname, float score)
-        {
-            this.nickname = nickname;
-            this.score = score;
-        }
-    }
-    */
     private void Awake()
     {
         Instance = this;

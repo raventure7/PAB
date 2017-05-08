@@ -13,7 +13,7 @@ public class PoopManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if(poop.GetComponent<PoopInfo>().count() <= 230)
+        if(poop.GetComponent<PoopInfo>().count() <= 150)
         { 
             GameObject Poop = (GameObject)Instantiate(poop, new Vector3(Random.Range(-17.0f, 22.0f), 0f, 0f), Quaternion.identity);
             randomNumber = Random.Range(0, 2147483646);

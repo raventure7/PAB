@@ -8,8 +8,11 @@ public class GameManager : MonoBehaviour {
 
     public PlayerController Player;
     public Text Timer;
+    public Text nowRank;
+
     public float timer;
     public GameObject Popup_GameOver;
+    public Dictionary<int, Rank> TempRankMap;
 
     // Use this for initialization
     public enum State
@@ -22,12 +25,16 @@ public class GameManager : MonoBehaviour {
 
     private void Awake()
     {
-        
+        TempRankMap = ResultManager.Instance.rankMap;
     }
     void Start () {
         timer = 0;
         state = State.Ready;
+        
+        nowRank.text = (ResultManager.Instance.rankMap.Count +1).ToString();
         StartCoroutine("ScoreCheck");
+        
+
 
     }
 	
@@ -46,6 +53,7 @@ public class GameManager : MonoBehaviour {
             Player.ShieldDestory();
             state = State.Play;
         }
+
     }
     private void LateUpdate()
     {
@@ -57,6 +65,22 @@ public class GameManager : MonoBehaviour {
             case State.Play:
                 Player.isPlay = true;
                 if (Player.IsDead()) GameOver();
+
+                // 지속 체크
+                if(TempRankMap.Count >= 1)
+                { 
+                    foreach (KeyValuePair<int, Rank> pair in TempRankMap)
+                    {
+                        int ranking = pair.Key;
+                        Rank rank = pair.Value;
+                        if (timer >= rank.score)
+                        {
+                            nowRank.text = (ranking).ToString();
+                            TempRankMap.Remove(ranking);
+                            break;
+                        }
+                    }
+                }
                 break;
             case State.GameOver:
                 
