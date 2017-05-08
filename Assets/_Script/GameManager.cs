@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour {
     public GameObject Popup_GameOver;
     public Dictionary<int, Rank> TempRankMap;
 
+    float tempRank;
     // Use this for initialization
     public enum State
     {
@@ -75,7 +76,11 @@ public class GameManager : MonoBehaviour {
                         Rank rank = pair.Value;
                         if (timer >= rank.score)
                         {
-                            nowRank.text = (ranking).ToString();
+                            tempRank = (ranking);
+                            if(tempRank < float.Parse(nowRank.text))
+                            {
+                                nowRank.text = tempRank.ToString();
+                            }
                             TempRankMap.Remove(ranking);
                             break;
                         }
@@ -83,7 +88,6 @@ public class GameManager : MonoBehaviour {
                 }
                 break;
             case State.GameOver:
-                
                 Popup_GameOver.SetActive(true);
                 break;
         }

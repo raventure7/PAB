@@ -46,7 +46,7 @@ public class ConnectManager : MonoBehaviour {
         if(this.hsHeader.Count > 0)
         {
             www = new WWW(url, form.data, hsHeader);
-        }
+        }else 
         {
             www = new WWW(url, form.data);
         }
@@ -55,7 +55,6 @@ public class ConnectManager : MonoBehaviour {
         SetSessionCookie(www);
         result = www.text;
         www.Dispose();
-        
         resultFunction();
     }
 

@@ -24,6 +24,7 @@ public class DBManager : MonoBehaviour {
 
     public void AddScore()
     {
+        Debug.Log("Add Score");
         today = System.DateTime.Now.ToString("yyyy-MM-dd"); // 오늘 날짜
         nowScore = PlayerPrefs.GetFloat("nowscore"); // 현재 점수
         PlayerNickname = PlayerPrefs.GetString("nickname"); // 유저 닉네임
@@ -33,7 +34,7 @@ public class DBManager : MonoBehaviour {
         form.AddField("nickname", PlayerNickname);
         form.AddField("nowscore", nowScore.ToString()); //문자열로 넘김
         form.AddField("today", today);
-        Debug.Log(PlayerNickname + "/" + nowScore.ToString() + "/" + today);
+        //Debug.Log(PlayerNickname + "/" + nowScore.ToString() + "/" + today);
 
         resultFunction rf = new resultFunction(DebugLog);
         StartCoroutine( ConnectManager.getInst().SendData(URL+"/addScore.php", form, rf) );
