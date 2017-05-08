@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: c6ce3456a5068dd468243c43d5229690
+timeCreated: 1494159499
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: drfont_daraehand
+  fontNames:
+  - drfont_daraehand
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

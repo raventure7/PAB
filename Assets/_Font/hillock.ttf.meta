@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: dc36ce15374e1eb4fbe951e625f4f768
+timeCreated: 1494001837
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Hillock (BRK)
+  fontNames:
+  - Hillock (BRK)
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
