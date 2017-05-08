@@ -35,9 +35,16 @@ public class IndexManager : MonoBehaviour {
             ConnectManager.AddComponent<ConnectManager>();
             DontDestroyOnLoad(ConnectManager); //Scene이 변경 되어도 제거 되지 않는다.
         }
+        if (GameObject.Find("ResultManager") == null)
+        {
+            GameObject ResultManager = new GameObject("ResultManager");
+            ResultManager.AddComponent<ResultManager>();
+            DontDestroyOnLoad(ResultManager); //Scene이 변경 되어도 제거 되지 않는다.
+        }
     }
     void Start () {
         Poop = (GameObject)Instantiate(poop, new Vector3(1.39f, 2.52f, 0f), Quaternion.identity);
+        DBManager.Instance.GetTodayRankList(); // 랭킹 점수 가져오기.
 
     }
 	
@@ -53,6 +60,7 @@ public class IndexManager : MonoBehaviour {
                 
             }
         }
+
     }
 
     // 게임 시작 버튼

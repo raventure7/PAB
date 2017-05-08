@@ -14,19 +14,20 @@ public class DBManager : MonoBehaviour {
     private void Awake()
     {
         Instance = this;
+        URL = "http://raventure77.cafe24.com/poop";
     }
     // Use this for initialization
     void Start()
     {
-        PlayerNickname = PlayerPrefs.GetString("nickname");
-        URL = "http://raventure77.cafe24.com/poop";
         
     }
 
     public void AddScore()
     {
-        today = System.DateTime.Now.ToString("yyyy-MM-dd");
-        nowScore = PlayerPrefs.GetFloat("nowscore");
+        today = System.DateTime.Now.ToString("yyyy-MM-dd"); // 오늘 날짜
+        nowScore = PlayerPrefs.GetFloat("nowscore"); // 현재 점수
+        PlayerNickname = PlayerPrefs.GetString("nickname"); // 유저 닉네임
+
         WWWForm form = new WWWForm();
 
         form.AddField("nickname", PlayerNickname);
@@ -37,6 +38,16 @@ public class DBManager : MonoBehaviour {
         resultFunction rf = new resultFunction(DebugLog);
         StartCoroutine( ConnectManager.getInst().SendData(URL+"/addScore.php", form, rf) );
     }
+    public void GetTodayRankList()
+    {
+        today = System.DateTime.Now.ToString("yyyy-MM-dd"); // 오늘 날짜
+        
+        WWWForm form = new WWWForm();
+        form.AddField("today", today);
+        resultFunction rf = new resultFunction(ResultManager.Instance.ResultTodayRankMap);
+        StartCoroutine(ConnectManager.getInst().SendData(URL + "/getTodayScoreList.php", form, rf));
+    }
+
 
 	public void DebugLog()
     {
