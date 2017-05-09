@@ -31,10 +31,16 @@ public class GameManager : MonoBehaviour {
     void Start () {
         timer = 0;
         state = State.Ready;
-        
+
+        //Rank Map 갱신
+        DBManager.Instance.GetTodayRankList2(); // 랭킹 점수 가져오기.
+
         nowRank.text = (ResultManager.Instance.rankMap.Count +1).ToString();
+        Debug.Log(ResultManager.Instance.rankMap.Count);
         StartCoroutine("ScoreCheck");
-        
+        StartCoroutine("PoopLevelUp");
+
+
 
 
     }
@@ -46,6 +52,7 @@ public class GameManager : MonoBehaviour {
         { 
             timer += Time.deltaTime;
             Timer.text = string.Format("{0:N0}", timer);
+            
         }
         
         // 5초 뒤 
@@ -54,6 +61,7 @@ public class GameManager : MonoBehaviour {
             Player.ShieldDestory();
             state = State.Play;
         }
+
 
     }
     private void LateUpdate()
@@ -66,9 +74,9 @@ public class GameManager : MonoBehaviour {
             case State.Play:
                 Player.isPlay = true;
                 if (Player.IsDead()) GameOver();
-
+                
                 // 지속 체크
-                if(TempRankMap.Count >= 1)
+                if (TempRankMap.Count >= 1)
                 { 
                     foreach (KeyValuePair<int, Rank> pair in TempRankMap)
                     {
@@ -106,6 +114,16 @@ public class GameManager : MonoBehaviour {
             yield return new WaitForSeconds(1.0f);
             SoundManager.Instance.ScoreSound();
            
+        }
+    }
+    IEnumerator PoopLevelUp()
+    {
+        while (state != State.GameOver)
+        {
+            yield return new WaitForSeconds(5.0f);
+            Debug.Log("Poop Level Up");
+            PoopManager.Instance.poopCount = PoopManager.Instance.poopCount + 20;
+            PoopManager.Instance.poopScale = PoopManager.Instance.poopScale + 0.01f;
         }
     }
 

@@ -40,10 +40,24 @@ public class ResultManager : MonoBehaviour {
             rankBox.transform.FindChild("rank").GetComponent<Text>().text = ranking.ToString();
             rankBox.transform.FindChild("nickname").GetComponent<Text>().text = rank.nickname;
             rankBox.transform.FindChild("score").GetComponent<Text>().text = (rank.score).ToString();
-            Debug.Log("생성");
+
             rankBox.transform.SetParent(GameObject.Find("Canvas/Tab_TotalRank/Scroll View/Viewport/Content").transform);
         }
 
+    }
+    // Game 씬에서 랭킹정보 가져오기 , UI 뿌려주기 기능 없음.
+    public void ResultTodayRankMapUINone()
+    {
+        rankMap = new Dictionary<int, Rank>();
+        //Debug.Log(ConnectManager.getInst()._result);
+        string[] lines = ConnectManager.getInst()._result.Split(new string[] { "\n" }, System.StringSplitOptions.RemoveEmptyEntries);
+        for (int i = 0; i < lines.Length; i++)
+        {
+            string[] _parts = lines[i].Split(',');
+            string _nickname = _parts[0];
+            float _score = float.Parse(_parts[1]);
+            rankMap.Add(i + 1, new Rank(_nickname, _score));
+        }
     }
 
 }

@@ -48,9 +48,20 @@ public class DBManager : MonoBehaviour {
         resultFunction rf = new resultFunction(ResultManager.Instance.ResultTodayRankMap);
         StartCoroutine(ConnectManager.getInst().SendData(URL + "/getTodayScoreList.php", form, rf));
     }
+    // Game Scene 에서만 출력 함. 위에껀 메인(인덱스 페이지)
+    public void GetTodayRankList2()
+    {
+        today = System.DateTime.Now.ToString("yyyy-MM-dd"); // 오늘 날짜
+
+        WWWForm form = new WWWForm();
+        form.AddField("today", today);
+        resultFunction rf = new resultFunction(ResultManager.Instance.ResultTodayRankMapUINone);
+        StartCoroutine(ConnectManager.getInst().SendData(URL + "/getTodayScoreList.php", form, rf));
+    }
 
 
-	public void DebugLog()
+
+    public void DebugLog()
     {
         Debug.Log(ConnectManager.getInst()._result);
     }
