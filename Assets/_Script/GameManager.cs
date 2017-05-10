@@ -39,6 +39,9 @@ public class GameManager : MonoBehaviour {
         Debug.Log(ResultManager.Instance.rankMap.Count);
         StartCoroutine("ScoreCheck");
         StartCoroutine("PoopLevelUp");
+        //플레이 횟수 누적
+        PlayerPrefs.SetInt("PlayCount", PlayerPrefs.GetInt("PlayCount") + 1 );
+        Debug.Log(PlayerPrefs.GetInt("PlayCount"));
 
 
 
@@ -106,6 +109,13 @@ public class GameManager : MonoBehaviour {
         Debug.Log("Game Over");
         PlayerPrefs.SetFloat("nowscore", float.Parse(Timer.text));
         DBManager.Instance.AddScore();
+        
+        //timer <= 10
+        if (PlayerPrefs.GetInt("PlayCount") == 5 )
+        {
+            UnityAds.Instance.ShowAd();
+            PlayerPrefs.SetInt("PlayCount", 0);
+        }
     }
     IEnumerator ScoreCheck()
     {
@@ -122,8 +132,11 @@ public class GameManager : MonoBehaviour {
         {
             yield return new WaitForSeconds(5.0f);
             Debug.Log("Poop Level Up");
-            PoopManager.Instance.poopCount = PoopManager.Instance.poopCount + 20;
-            PoopManager.Instance.poopScale = PoopManager.Instance.poopScale + 0.01f;
+            if(PoopManager.Instance.poopCount <= 400)
+            { 
+                PoopManager.Instance.poopCount = PoopManager.Instance.poopCount + 10;
+                PoopManager.Instance.poopScale = PoopManager.Instance.poopScale + 0.005f;
+            }
         }
     }
 

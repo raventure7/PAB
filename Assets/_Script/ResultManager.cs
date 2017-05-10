@@ -7,6 +7,7 @@ public class ResultManager : MonoBehaviour {
 
     public static ResultManager Instance;
     public Dictionary<int, Rank> rankMap;
+    int MapCount = 0;
 
     private void Awake()
     {
@@ -27,14 +28,19 @@ public class ResultManager : MonoBehaviour {
             float _score = float.Parse(_parts[1]);
             rankMap.Add(i + 1, new Rank(_nickname, _score));    
         }
+        
         // 그리고 뿌려주기
-        foreach(KeyValuePair<int, Rank> pair in rankMap)
+        foreach (KeyValuePair<int, Rank> pair in rankMap)
         {
-            int ranking = pair.Key;
+            MapCount++;
+            if (MapCount <= 100)
+            {
+                int ranking = pair.Key;
             Rank rank = pair.Value;
             //Debug.Log(ranking + "/" + rank.nickname);
             
             // 생성
+            
             GameObject FP_rankBox = Resources.Load("RankBox") as GameObject;
             GameObject rankBox = Instantiate(FP_rankBox) as GameObject;
             rankBox.transform.FindChild("rank").GetComponent<Text>().text = ranking.ToString();
@@ -42,6 +48,7 @@ public class ResultManager : MonoBehaviour {
             rankBox.transform.FindChild("score").GetComponent<Text>().text = (rank.score).ToString();
 
             rankBox.transform.SetParent(GameObject.Find("Canvas/Tab_TotalRank/Scroll View/Viewport/Content").transform);
+            }
         }
 
     }
